@@ -1,0 +1,28 @@
+# Source files
+!*.c
+!*.h
+
+# Libraries
+*.a
+
+# Shared objects
+*.so
+
+# Object files
+*.o
+
+# Dependency files
+*.M
+
+# Valgrind exclusion
+*.X
+
+# Backup files
+*~
+
+# Binary files
+tests/alloc-free
+tests/get
+tests/populate
+tests/pretty-table
+tests/print

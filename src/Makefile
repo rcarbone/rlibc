@@ -38,6 +38,7 @@ LIBSRCS  += gnode.c
 LIBSRCS  += more-gnode.c
 LIBSRCS  += rmatrix.c
 LIBSRCS  += gnu-argv.c
+LIBSRCS  += curses.c
 
 # The name of the games
 LIBNAME   = rlibc

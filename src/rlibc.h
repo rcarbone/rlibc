@@ -41,3 +41,10 @@ char **buildargv (const char *input);
 int writeargv (char * const *argv, FILE *f);
 void expandargv (int *argcp, char ***argvp);
 int countargv (char * const *argv);
+
+
+/* Public functions in file curses.c */
+void initialize_curses (void);
+void terminate_curses (void);
+int get_cols (void);
+int get_rows (void);

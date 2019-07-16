@@ -54,8 +54,18 @@ struct mx
 };
 
 
+/* Check a cell content for equality */
+static bool mxcelleq (char * cell1, char * cell2)
+{
+  if (! cell1 && ! cell2)
+    return true;
+
+  return cell1 && cell2 ? strcmp (cell1, cell2) : false;
+}
+
+
 /* A rule for pretty printing the matrix */
-static char * mxrule (mx_t * mx)
+char * mxrule (mx_t * mx)
 {
   static char line [MAXLINE];
 
@@ -75,16 +85,6 @@ static char * mxrule (mx_t * mx)
   line [pos] = 0x0;
 
   return line;
-}
-
-
-/* Check a cell content for equality */
-static bool mxcelleq (char * cell1, char * cell2)
-{
-  if (! cell1 && ! cell2)
-    return true;
-
-  return cell1 && cell2 ? strcmp (cell1, cell2) : false;
 }
 
 

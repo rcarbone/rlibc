@@ -45,6 +45,7 @@ typedef struct mx mx_t;
  * Public functions
  */
 
+char * mxrule (mx_t * mx);
 mx_t * mxalloc (unsigned rows, unsigned cols);
 void mxfree (mx_t * mx);
 void mxrm (mx_t * mx);

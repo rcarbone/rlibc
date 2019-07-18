@@ -64,6 +64,7 @@ char ** mxgetrow (mx_t * mx, unsigned r);
 char ** mxgetcol (mx_t * mx, unsigned c);
 
 char * mxcenter (char * src, unsigned max);
+void mxprintf (mx_t * mx, FILE * fp);
 void mxprint (mx_t * mx);
 void mxrevprint (mx_t * mx);
 

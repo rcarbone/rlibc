@@ -81,7 +81,6 @@ char * mxrule (mx_t * mx)
       line [pos] = '+';
     }
   line [pos ++] = '+';
-  line [pos ++] = '\n';
   line [pos] = 0x0;
 
   return line;
@@ -276,8 +275,8 @@ char * mxcenter (char * src, unsigned max)
 }
 
 
-/* Print a matrix */
-void mxprint (mx_t * mx)
+/* Print a matrix on a given file stream */
+void mxprintf (mx_t * mx, FILE * fp)
 {
   unsigned r;
   unsigned c;
@@ -286,22 +285,30 @@ void mxprint (mx_t * mx)
   if (! mx)
     return;
 
-  printf ("%s", mxrule (mx));
+  fprintf (fp, "%s\n", mxrule (mx));
 
   for (r = 0; r < mx -> rows; r ++)
     {
-      printf ("|");
+      fprintf (fp, "|");
       for (c = 0; c < mx -> cols; c ++)
 	{
 	  n = mxcolmaxlen (mx, c);
-	  printf (" %-*.*s |", n, n, mx -> data [r * mx -> cols + c]);
+	  fprintf (fp, " %-*.*s |", n, n, mx -> data [r * mx -> cols + c]);
 	}
-      printf ("\n");
+      fprintf (fp, "\n");
 
       if (r == 0)
-	printf ("%s", mxrule (mx));
+	fprintf (fp, "%s\n", mxrule (mx));
     }
-  printf ("%s", mxrule (mx));
+  fprintf (fp, "%s\n", mxrule (mx));
+  fflush (fp);
+}
+
+
+/* Print a matrix */
+void mxprint (mx_t * mx)
+{
+  mxprintf (mx, stdout);
 }
 
 

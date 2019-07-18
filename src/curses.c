@@ -32,8 +32,8 @@
 
 static int height     = DEFAULT_HEIGHT;
 static int width      = DEFAULT_WIDTH;
-static int ioctl_rows = 0;
-static int ioctl_cols = 0;
+static int ioctl_rows = -1;
+static int ioctl_cols = -1;
 
 
 static void save_env (char * name)
@@ -120,7 +120,7 @@ void terminate_curses (void)
 
 int get_cols (void)
 {
-  if (ioctl_rows == 0 && ioctl_cols == 0)
+  if (ioctl_rows == -1 && ioctl_cols == -1)
     get_terminal_size ();
   return width;
 }
@@ -128,7 +128,7 @@ int get_cols (void)
 
 int get_rows (void)
 {
-  if (ioctl_rows == 0 && ioctl_cols == 0)
+  if (ioctl_rows == -1 && ioctl_cols == -1)
     get_terminal_size ();
   return height;
 }

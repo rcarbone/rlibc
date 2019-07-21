@@ -23,6 +23,7 @@
 /* System headers */
 #include <stdint.h>
 #include <time.h>
+#include <sys/time.h>
 
 /* Project headers */
 #include "rtypes.h"
@@ -41,6 +42,7 @@ rtime_t sswall (void);
 double kops (rtime_t delta, unsigned n);
 
 unsigned rrand (unsigned n);
+unsigned xrand (unsigned n);
 void ** varnd (unsigned argc, void * argv []);
 
 

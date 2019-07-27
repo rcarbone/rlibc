@@ -13,5 +13,6 @@ int main (int argc, char * argv [])
 
   mxfree (mxalloc (rows, cols));
 
+  /* Bye bye! */
   return 0;
 }

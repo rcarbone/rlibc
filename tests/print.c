@@ -29,5 +29,6 @@ int main (int argc, char * argv [])
 
   mxfree (mx);
 
+  /* Bye bye! */
   return 0;
 }

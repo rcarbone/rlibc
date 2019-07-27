@@ -246,52 +246,81 @@ char ** argsuniq (char * argv [], char * item)
 }
 
 
-/* Print the arguments in 'argc' rows (one argument for line) */
-void argsrows (char * argv [])
+/* Evaluate widest string in argv */
+unsigned argswidest (char * argv [])
 {
-  unsigned argc = 0;
-  while (argv && * argv)
-    printf ("%3d. \"%s\"\n", ++ argc, * argv ++);
-}
-
-
-/* Find the longest name */
-unsigned argslongest (char * argv [])
-{
-  unsigned longest = 0;
+  unsigned widest = 0;
 
   while (argv && * argv)
     {
-      longest = RMAX (longest, strlen (* argv));
+      widest = RMAX (widest, strlen (* argv));
       argv ++;
     }
-  return longest;
+  return widest;
 }
 
 
-/* fit on a 25x80 terminal */
-void argscols (char * argv [])
+/* how many columns? */
+static unsigned eval_cols (char * argv [], unsigned width)
 {
-  unsigned argc = arrlen (argv);
-  unsigned rows, cols;
-  unsigned i, j;
-
-  unsigned max = argslongest (argv);
-
-  if (! max)
-    return;
-
-  /* how many columns? */
-  cols = 80 / ((max + 8) &~ 7);
+  unsigned max = argswidest (argv);
+  unsigned cols = width / ((max + 8) &~ 7);
   if (cols == 0)
     cols = 1;
+  return cols;
+}
+
+
+/* how many rows? */
+static unsigned eval_rows (char * argv [], unsigned width)
+{
+  unsigned cols = eval_cols (argv, width);
+  return (arrlen (argv) + cols - 1) / cols;
+}
+
+
+/*  how many items in the last row? */
+static unsigned eval_last (char * argv [], unsigned width)
+{
+  return arrlen (argv) - eval_cols (argv, width) * (eval_rows (argv, width) - 1);
+}
+
+
+int args_iter (unsigned rows, unsigned cols, unsigned r, unsigned c)
+{
+  return r < rows - 1 && c < cols - 1 ? r * cols + c : -1;
+}
+
+
+int args_iter_tx (unsigned rows, unsigned cols, unsigned r, unsigned c)
+{
+  return r < rows - 1 && c < cols - 1 ? c * rows + r : -1;
+}
+
+
+/* Print items by rows - use a single array instead of an array of arrays and access with [r * cols + c] */
+void args_2d_rows (char * argv [], unsigned width)
+{
+  unsigned argc = arrlen (argv);
+  unsigned max  = argswidest (argv) + 1;    /* add separator */
+  unsigned rows;
+  unsigned cols;
+  unsigned r;
+  unsigned c;
+
+  /* how many columns? */
+  cols = width / ((max + 8) &~ 7);
+  if (cols == 0)
+    cols = 1;
+
+  /* how many rows? */
   rows = (argc + cols - 1) / cols;
 
-  for (i = 0; i < rows; i ++)
+  for (r = 0; r < rows; r ++)
     {
-      for (j = 0; j < cols; j ++)
-	if ((i + j * rows) < argc)
-	  printf ("%-*.*s", max + 1, max + 1, argv [i + j * rows]);
+      for (c = 0; c < cols; c ++)
+	if (r * cols + c < argc)
+	  printf ("%-*.*s", max, max, argv [r * cols + c]);
 	else
 	  break;
       printf ("\n");
@@ -299,39 +328,85 @@ void argscols (char * argv [])
 }
 
 
-/* fit on a 25x80 terminal by rows */
-void args_2d_rows (char * argv [])
+/* Print items by columns - use a single array instead of an array of arrays and access with [c * rows + r] */
+void args_2d_cols (char * argv [], unsigned width)
 {
   unsigned argc = arrlen (argv);
-  unsigned max = argslongest (argv);
-  unsigned rows, cols;
-  unsigned i, j;
-
-  if (! max)
-    return;
+  unsigned max  = argswidest (argv) + 1;    /* add separator */
+  unsigned rows;
+  unsigned cols;
+  unsigned r;
+  unsigned c;
+  unsigned last;
 
   /* how many columns? */
-  cols = 80 / ((max + 8) &~ 7);
+  cols = width / ((max + 8) &~ 7);
   if (cols == 0)
     cols = 1;
+
+  /* how many rows? */
   rows = (argc + cols - 1) / cols;
 
-  for (i = 0; i < rows; i ++)
+  /* how many items in the last row? */
+  last = eval_last (argv, width);
+
+  for (r = 0; r < rows - 1; r ++)
     {
-      for (j = 0; j < cols; j ++)
-	if (i * cols + j < argc)
-	  printf ("%-*.*s", max + 1, max + 1, argv [i * cols + j]);
-	else
-	  break;
+      for (c = 0; c < cols; c ++)
+	{
+	  if (c <= last)
+	    {
+	      if (c * rows + r < argc)
+		{
+		  if (c < cols - 1)
+		    printf ("%-*.*s", max, max, argv [c * rows + r]);
+		  else
+		    printf ("%s", argv [c * rows + r]);
+		}
+	      else
+		break;
+	    }
+	  else
+	    {
+	      unsigned less = c - last;
+	      if (c * rows + r - less < argc)
+		{
+		  if (c < cols - 1)
+		    printf ("%-*.*s", max, max, argv [c * rows + r - less]);
+		  else
+		    printf ("%s", argv [c * rows + r - less]);
+		}
+	      else
+		break;
+	    }
+	}
       printf ("\n");
     }
+
+  /* Last row */
+  for (c = 0; c < last; c ++)
+    if (c < last - 1)
+      printf ("%-*.*s", max, max, argv [c * rows + rows - 1]);
+    else
+      printf ("%s", argv [c * rows + rows - 1]);
+  printf ("\n");
 }
 
 
-/* Print all lines in [argv] - each item in its own line terminated by [newline] */
+/* Print all items in [argv] - each item in its own line terminated by [newline] */
 void print_lines (char * argv [])
 {
   if (argv)
     while (* argv)
       printf ("%s\n", * argv ++);
+}
+
+
+/* Print all items in [argv] - each item in its own line prefixed by counter and terminated by [newline] */
+void argsrows (char * argv [])
+{
+  unsigned argc = 0;
+  if (argv)
+    while (* argv)
+      printf ("%3d. \"%s\"\n", ++ argc, * argv ++);
 }

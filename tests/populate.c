@@ -87,5 +87,6 @@ int main (int argc, char * argv [])
   mxfree (mx2);
   mxfree (mx1);
 
+  /* Bye bye! */
   return 0;
 }

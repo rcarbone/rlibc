@@ -54,11 +54,15 @@ char ** argsblanks (char * list);
 char ** argsuniq (char * argv [], char * item);
 bool argsexists (char * argv [], char * name);
 
-void argsrows (char * argv []);
-unsigned argslongest (char * argv []);
-void argscols (char * argv []);
-void args_2d_rows (char * argv []);
+
+/* evaluate widest string in argv */
+unsigned argswidest (char * argv []);
+
+void args_2d_rows (char * argv [], unsigned width);
+void args_2d_cols (char * argv [], unsigned width);
+
 void print_lines (char * argv []);
+void argsrows (char * argv []);
 
 #ifdef __cplusplus
 }

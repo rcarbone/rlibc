@@ -86,5 +86,6 @@ int main (void)
   /* Destroy the matrix */
   mxrm (mx);
 
+  /* Bye bye! */
   return 0;
 }

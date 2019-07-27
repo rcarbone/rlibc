@@ -27,9 +27,9 @@
 #include "rmatrix.h"
 
 /*
- * Use a single array instead of an array of arrays and access with i = [r * cols + c]
+ * Use a single array instead of an array of arrays and access with [r * cols + c]
  *
- *   TODO: what about j = [c * rows + r] ?
+ *   TODO: what about [c * rows + r] ?
  *
  * Given a value i in [0 - rows*cols - 1] then
  *   r = (i - (i % cols)) / cols

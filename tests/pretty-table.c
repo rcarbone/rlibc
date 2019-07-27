@@ -83,5 +83,6 @@ int main (int argc, char * argv [])
   /* Memory cleanup */
   mxfree (mx);
 
+  /* Bye bye! */
   return 0;
 }

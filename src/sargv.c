@@ -299,7 +299,7 @@ int args_iter_tx (unsigned rows, unsigned cols, unsigned r, unsigned c)
 
 
 /* Print items by rows - use a single array instead of an array of arrays and access with [r * cols + c] */
-void args_2d_rows (char * argv [], unsigned width)
+void args_print_rows (char * argv [], unsigned width)
 {
   unsigned argc = arrlen (argv);
   unsigned max  = argswidest (argv) + 1;    /* add separator */
@@ -329,7 +329,7 @@ void args_2d_rows (char * argv [], unsigned width)
 
 
 /* Print items by columns - use a single array instead of an array of arrays and access with [c * rows + r] */
-void args_2d_cols (char * argv [], unsigned width)
+void args_print_cols (char * argv [], unsigned width)
 {
   unsigned argc = arrlen (argv);
   unsigned max  = argswidest (argv) + 1;    /* add separator */

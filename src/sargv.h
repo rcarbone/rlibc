@@ -58,8 +58,8 @@ bool argsexists (char * argv [], char * name);
 /* evaluate widest string in argv */
 unsigned argswidest (char * argv []);
 
-void args_2d_rows (char * argv [], unsigned width);
-void args_2d_cols (char * argv [], unsigned width);
+void args_print_rows (char * argv [], unsigned width);
+void args_print_cols (char * argv [], unsigned width);
 
 void print_lines (char * argv []);
 void argsrows (char * argv []);

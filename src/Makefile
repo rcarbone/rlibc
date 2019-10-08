@@ -37,6 +37,7 @@ LIBSRCS  += plugins.c
 LIBSRCS  += gnode.c
 LIBSRCS  += more-gnode.c
 LIBSRCS  += rmatrix.c
+LIBSRCS  += rsi.c
 LIBSRCS  += gnu-argv.c
 LIBSRCS  += curses.c
 

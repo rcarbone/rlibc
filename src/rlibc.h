@@ -32,6 +32,7 @@
 #include "roptions.h"
 #include "gnode.h"
 #include "rmatrix.h"
+#include "rsi.h"
 
 
 /* Public functions in file gnu-argv.c */

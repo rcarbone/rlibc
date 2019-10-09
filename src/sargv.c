@@ -394,11 +394,13 @@ void args_print_cols (char * argv [], unsigned width)
 
 
 /* Print all items in [argv] - each item in its own line terminated by [newline] */
-void print_lines (char * argv [])
+char ** print_lines (char * argv [])
 {
+  char ** lines = argv;
   if (argv)
     while (* argv)
       printf ("%s\n", * argv ++);
+  return lines;
 }
 
 

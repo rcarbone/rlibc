@@ -33,6 +33,7 @@
 #include "gnode.h"
 #include "rmatrix.h"
 #include "rsi.h"
+#include "fmemdmp.h"
 
 
 /* Public functions in file gnu-argv.c */

@@ -23,17 +23,22 @@
 #include "vargv.h"
 #include "sargv.h"
 
-#include "rctype.h"
-#include "support.h"
+#include "rtypes.h"
+#include "replace.h"
 #include "rstring.h"
+#include "support.h"
+#include "gnode.h"
+#include "rctype.h"
 #include "rwall.h"
 #include "interval.h"
 #include "elapsed.h"
+#include "xrand.h"
 #include "roptions.h"
-#include "gnode.h"
-#include "rmatrix.h"
-#include "rsi.h"
+#include "parsecfg.h"
 #include "fmemdmp.h"
+#include "other.h"
+#include "rsi.h"
+#include "rmatrix.h"
 
 
 /* Public functions in file gnu-argv.c */

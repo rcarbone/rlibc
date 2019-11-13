@@ -20,13 +20,16 @@
 /* System headers */
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <string.h>
 #include <time.h>
+#include <sys/time.h>
+#include <sys/stat.h>
+#include <sys/utsname.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#include <sys/utsname.h>
 
-
-/* System headers */
+/* Project headers */
 #include "support.h"
 
 
@@ -54,7 +57,7 @@ char * rfqname (void)
 
 
 /* Announce to the world! */
-void rhelloworld (char * progname, char * version, char * date, char * _time, char * nodename, char * author)
+void rhello (char * progname, char * version, char * date, char * _time, char * nodename, char * author)
 {
   time_t now = time (0);
   char * nowstring = ctime (& now);

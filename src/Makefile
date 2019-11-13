@@ -23,22 +23,31 @@ ROOTDIR   = ../..
 # C source files
 MAINSRCS +=
 LIBSRCS  += safe.c
+LIBSRCS  += replace.c
+LIBSRCS  += rstring.c
 LIBSRCS  += vargv.c
 LIBSRCS  += sargv.c
-LIBSRCS  += rstring.c
+LIBSRCS  += gnu-argv.c
+LIBSRCS  += gnode.c
+LIBSRCS  += more-gnode.c
 LIBSRCS  += rctype.c
 LIBSRCS  += rwall.c
 LIBSRCS  += interval.c
 LIBSRCS  += elapsed.c
 LIBSRCS  += support.c
+LIBSRCS  += xrand.c
 LIBSRCS  += roptions.c
-LIBSRCS  += other.c
+LIBSRCS  += parsecfg.c
+LIBSRCS  += rwall.c
+LIBSRCS  += interval.c
+LIBSRCS  += flux.c
+LIBSRCS  += elapsed.c
+LIBSRCS  += xlog.c
+LIBSRCS  += fmemdmp.c
 LIBSRCS  += plugins.c
-LIBSRCS  += gnode.c
-LIBSRCS  += more-gnode.c
-LIBSRCS  += rmatrix.c
+LIBSRCS  += other.c
 LIBSRCS  += rsi.c
-LIBSRCS  += gnu-argv.c
+LIBSRCS  += rmatrix.c
 LIBSRCS  += curses.c
 
 # The name of the games

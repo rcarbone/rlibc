@@ -380,7 +380,7 @@ void g_node_hprint_rosetta (GNode * root);
 void g_node_randy_print_tree (GNode * root);
 
 /* My historical bugged version */
-void g_node_hprint_tree_bug (GNode * root);
+void g_node_vprint_tree_bug (GNode * root);
 
 #endif /* ROCCO */
 

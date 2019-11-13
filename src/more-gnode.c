@@ -17,7 +17,6 @@
  */
 
 
-
 /* How to pretty print a tree upright in a rectangular area on your computer screen */
 
 #include <stdio.h>
@@ -29,10 +28,22 @@
 
 #define GMAX(a,b) ((a) > (b) ? (a) : (b))
 
-#define SPACE ' '
-#define HBAR  '-'
-#define VBAR  '|'
-#define PLUS  '+'
+
+/* UTF-8 defines by Johan Myreen, updated by Ben Winslow */
+#define UTF_V        "\342\224\202"        /* U+2502, Vertical line drawing char */
+#define UTF_H        "\342\224\200"        /* U+2500, Horizontal                 */
+#define UTF_UR       "\342\224\224"        /* U+2514, Up and right               */
+#define UTF_HD       "\342\224\254"        /* U+252C, Horizontal and down        */
+
+
+#define SPACE " "
+#define HBAR  "-"
+#define VBAR  "|"
+#if defined(ROCCO)
+#define PLUS  "+"
+#else
+#define PLUS  UTF_HD
+#endif /* ROCCO */
 
 
 /* All that should be recorded because of interest in a node */
@@ -76,7 +87,7 @@ static void center (char * s, unsigned n)
 
   if (! s || ! n)
     {
-      printf ("%*c", n, SPACE);
+      printf ("%*s", n, SPACE);
       return;
     }
 
@@ -85,24 +96,14 @@ static void center (char * s, unsigned n)
   z = n - x - y;
 
   if (x > 0)
-    printf ("%*c", x, SPACE);       /* header */
+    printf ("%*s", x, SPACE);       /* header */
   if (y < n)
     printf ("%-*.*s", y, y, s);     /* string */
   else
     printf ("%-*.*s", n, n, s);
   if (z > 0)
-    printf ("%*c", z, SPACE);       /* footer */
+    printf ("%*s", z, SPACE);       /* footer */
 }
-
-
-#if defined(ROCCO)
-static void indent (unsigned level, bool last, bool more)
-{
-  unsigned lvl;
-  for (lvl = 0; lvl < level; lvl ++)
-    printf ("%s ", lvl == level - 1 ? last ? "`--" : "|--" : more ? "|  " : "   ");
-}
-#endif /* ROCCO */
 
 
 static void setnode (node_t * n, GNode * node)
@@ -207,23 +208,23 @@ static void printitem (GNode * node, unsigned spaces)
  * x = 6 => +-*--+
  * x = 7 => +--*--+
  */
-static void connector (unsigned n, char center, char first, char last, char left, char right)
+static void connector (unsigned x, char * center, char * first, char * last, char * left, char * right)
 {
   unsigned m1 = 0;
   unsigned m2 = 0;
 
-  switch (n)
+  switch (x)
     {
     case 0: break;
-    case 1: printf ("%c", center); break;
-    case 2: printf ("%c%c", center, last); break;
-    case 3: printf ("%c%c%c", first, center, last); break;
+    case 1: printf ("%s", center); break;
+    case 2: printf ("%s%s", center, last); break;
+    case 3: printf ("%s%s%s", first, center, last); break;
 
     default:
-      m1 = (n - 3) / 2;
-      m2 = m1 + (n - 3) % 2;
+      m1 = (x - 3) / 2;
+      m2 = m1 + (x - 3) % 2;
 
-      connector (1, first, '?', '?', '?', '?');
+      connector (1, first, "?", "?", "?", "?");
       connector (m1, left, left, left, left, left);
       connector (1 + m2 + 1, right, center, last, right, right);
 
@@ -258,8 +259,8 @@ static void linesopra (GNode * n, unsigned spaces, bool last)
 
   if (n && n -> parent)
     {
-      char left = g_node_n_children (n -> parent) == 1 || g_node_first_child (n -> parent) == n ? SPACE : HBAR;
-      char right = g_node_n_children (n -> parent) != 1 &&
+      char * left = g_node_n_children (n -> parent) == 1 || g_node_first_child (n -> parent) == n ? SPACE : HBAR;
+      char * right = g_node_n_children (n -> parent) != 1 &&
 	(g_node_first_child (n -> parent) == g_node_last_child (n -> parent) || g_node_last_child (n -> parent) != n) ? HBAR : SPACE;
 
       connector (spaces, PLUS, left, right, left, right);
@@ -388,8 +389,15 @@ static gboolean x_foreach (GNode * node, gpointer _info)
 /* Implementation from Rosetta Code http://rosettacode.org/wiki/Visualize_a_tree#C adapted to use glib-gnode */
 static void print_rosetta (GNode * root, GNode * stems)
 {
+#if defined(ROCCO)
+  static char * more = "--";
   static char * down = "  |";
   static char * last = "  `";
+#else
+  static char * more = UTF_H UTF_H;
+  static char * down = "  " UTF_V;
+  static char * last = "  " UTF_UR;
+#endif /* ROCCO */
   static char * none = "   ";
 
   GNode col = {NULL, NULL};
@@ -407,7 +415,7 @@ static void print_rosetta (GNode * root, GNode * stems)
     }
 
   /* Print data */
-  printf ("--%s\n", (char *) root -> data);
+  printf ("%s%s\n", more, (char *) root -> data);
 
   /* Update stems for the next iteration */
   if (stem && stem -> data == last)
@@ -472,9 +480,11 @@ static void print_randy (GNode * root, randy_t * randy)
 }
 
 
-/* -=-=-=-=-=-=-
- * -=-= API -=-=
- * -=-=-=-=-=-=- */
+/*
+ * -=-=-=-=-=-=-
+ *      API
+ * -=-=-=-=-=-=-
+ */
 
 /* Memory cleanup */
 void g_node_no_more (GNode * root)

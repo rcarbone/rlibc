@@ -1,10 +1,19 @@
 /*
- * elle - C Toolkit for NCCLS LIS1 and LIS2 Protocols
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ *                   _ _ _
+ *              _ __| (_) |__   ___
+ *             | '__| | | '_ \ / __|
+ *             | |  | | | |_) | (__
+ *             |_|  |_|_|_.__/ \___|
+ *
+ *         C library of useful functions
  *
  * R. Carbone (rocco@tecsiel.it)
- * 1Q 2019
+ *   2Q 2019
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 

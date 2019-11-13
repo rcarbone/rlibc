@@ -31,14 +31,20 @@ int _hours_ (time_t t2, time_t t1);
 int _mins_ (time_t t2, time_t t1);
 
 struct timeval * tvnow (void);
+time_t timenow (void);
 bool samet (struct timeval * t2, struct timeval * t1);
+time_t seconds (struct timeval * t);
+time_t milliseconds (struct timeval * t);
+time_t microseconds (struct timeval * t);
 
 /* Time difference */
-int days (struct timeval * t2, struct timeval * t1);
-int hours (struct timeval * t2, struct timeval * t1);
-int mins (struct timeval * t2, struct timeval * t1);
-int secs (struct timeval * t2, struct timeval * t1);
-time_t msecs (struct timeval * t2, struct timeval * t1);
-time_t usecs (struct timeval * t2, struct timeval * t1);
+int tvdays (struct timeval * t2, struct timeval * t1);
+int tvhours (struct timeval * t2, struct timeval * t1);
+int tvmins (struct timeval * t2, struct timeval * t1);
+int tvsecs (struct timeval * t2, struct timeval * t1);
+time_t tvmsecs (struct timeval * t2, struct timeval * t1);
+time_t tvusecs (struct timeval * t2, struct timeval * t1);
+
+void print_time_in_secs (struct timeval * t, char * label);
 
 char * elapsedtime (struct timeval * t1, struct timeval * t2);

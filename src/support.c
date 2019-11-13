@@ -178,16 +178,3 @@ char * xpercentage (unsigned long partial, unsigned long total)
 
   return buffer [k];
 }
-
-
-/* Remove trailing cr [\r] and nl [\n] */
-void nocrlf (char * line)
-{
-  if (line)
-    while (* line)
-      {
-	if (line [strlen (line) - 1] == '\n' || line [strlen (line) - 1] == '\r')
-	  line [strlen (line) - 1] = 0x00;
-	line ++;
-      }
-}

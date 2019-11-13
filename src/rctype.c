@@ -20,7 +20,6 @@
 /* System headers */
 #include <ctype.h>
 
-
 /* Project headers */
 #include "rctype.h"
 

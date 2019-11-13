@@ -36,6 +36,9 @@ void rcenter (char * s, int n);
 void rupper (char * s);
 void rlower (char * s);
 
+/* Remove trailing cr [\r] and nl [\n] */
+void nocrlf (char * line);
+
 
 #ifdef __cplusplus
 }

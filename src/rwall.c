@@ -19,6 +19,7 @@
 
 /* System headers */
 #include <stdlib.h>
+#include <sys/time.h>
 
 /* Public header */
 #include "rwall.h"
@@ -89,7 +90,7 @@ unsigned rrand (unsigned n)
 
 
 /* Generate pseudo-random numbers in the range [0 n-1] */
-unsigned xrand (unsigned n)
+unsigned x_rand (unsigned n)
 {
   struct timeval tv;
 

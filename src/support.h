@@ -30,11 +30,11 @@
 
 
 /* Useful macros */
-#if !defined(RMAX)
-#define RMAX(a, b) (((a) > (b)) ? (a) : (b))
-#endif
 #if !defined(RMIN)
 #define RMIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+#if !defined(RMAX)
+#define RMAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 
@@ -59,9 +59,6 @@ unsigned digits (unsigned n);
 
 /* Well formatted percentage */
 char * xpercentage (unsigned long partial, unsigned long total);
-
-/* Remove trailing cr [\r] and nl [\n] */
-void nocrlf (char * line);
 
 char * rfqname (void);
 void rhelloworld (char * progname, char * version, char * date, char * time, char * nodename, char * author);

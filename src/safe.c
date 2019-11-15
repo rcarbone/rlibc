@@ -31,7 +31,7 @@ void * safefree (void * a)
 
 void * safedup (void * a)
 {
-  return a ? strdup (a) : a;
+  return a ? strdup ((char *) a) : a;
 }
 
 

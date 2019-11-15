@@ -38,6 +38,7 @@ extern "C" {
 
 #endif /* __cplusplus */
 
+
 unsigned optmax (struct option * options);
 char * optlegitimate (struct option * options);
 char * optname (struct option * options, unsigned n, unsigned val);

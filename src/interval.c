@@ -130,35 +130,35 @@ time_t microseconds (struct timeval * t)
 
 
 /* The time difference in days */
-int days (struct timeval * t2, struct timeval * t1)
+int tvdays (struct timeval * t2, struct timeval * t1)
 {
   return _days_ (t2 -> tv_sec, t1 -> tv_sec);
 }
 
 
 /* The time difference in hours */
-int hours (struct timeval * t2, struct timeval * t1)
+int tvhours (struct timeval * t2, struct timeval * t1)
 {
   return _hours_ (t2 -> tv_sec, t1 -> tv_sec);
 }
 
 
 /* The time difference in minutes */
-int mins (struct timeval * t2, struct timeval * t1)
+int tvmins (struct timeval * t2, struct timeval * t1)
 {
   return _mins_ (t2 -> tv_sec, t1 -> tv_sec);
 }
 
 
 /* The time difference in seconds */
-int secs (struct timeval * t2, struct timeval * t1)
+int tvsecs (struct timeval * t2, struct timeval * t1)
 {
   return (t2 -> tv_sec - t1 -> tv_sec) % 60;
 }
 
 
 /* The time difference in milliseconds */
-time_t msecs (struct timeval * t2, struct timeval * t1)
+time_t tvmsecs (struct timeval * t2, struct timeval * t1)
 {
   /* Compute delta in second, 1/10's and 1/1000's second units */
   time_t delta_seconds      = t2 -> tv_sec - t1 -> tv_sec;
@@ -174,7 +174,7 @@ time_t msecs (struct timeval * t2, struct timeval * t1)
 
 
 /* The time difference in microseconds */
-time_t usecs (struct timeval * t2, struct timeval * t1)
+time_t tvusecs (struct timeval * t2, struct timeval * t1)
 {
   /* Compute delta in second, 1/10's and 1/1000's second units */
   time_t delta_seconds      = t2 -> tv_sec - t1 -> tv_sec;
@@ -219,7 +219,7 @@ char * elapsedtime (struct timeval * start, struct timeval * stop)
 {
   static char et [64];
 
-  time_t elapsed = msecs (stop, start);
+  time_t elapsed = tvmsecs (stop, start);
 
   if (timeindays (elapsed))
     sprintf (et, "%d days, %02d:%02ld:%02ld.%03ld",

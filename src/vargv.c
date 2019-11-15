@@ -21,6 +21,10 @@
  * Utilities to handle dynamic arrays of pointers to void objects
  */
 
+
+/* System headers */
+#include <sys/time.h>
+
 /* Public header */
 #include "vargv.h"
 #include "rwall.h"
@@ -155,8 +159,10 @@ void ** vasort (void * argv [], vasort_f * cmp)
 void ** vashuffle (void * argv [])
 {
   unsigned n = valen (argv);
+  struct timeval tv;
 
-  srand (nswall ());
+  gettimeofday (& tv, NULL);
+  srand (tv . tv_sec ^ tv . tv_usec);
 
   if (n > 1)
     {
@@ -208,11 +214,13 @@ char * valeft (unsigned n)
  */
 void ** varnd (unsigned argc, void * argv [])
 {
+  struct timeval tv;
   unsigned i;
   unsigned j;
   void * t;
 
-  srand (nswall ());
+  gettimeofday (& tv, NULL);
+  srand (tv . tv_sec ^ tv . tv_usec);
 
   if (argc > 1)
     {

@@ -61,7 +61,7 @@ unsigned argswidest (char * argv []);
 void args_print_rows (char * argv [], unsigned width);
 void args_print_cols (char * argv [], unsigned width);
 
-void print_lines (char * argv []);
+char ** print_lines (char * argv []);
 void argsrows (char * argv []);
 
 #ifdef __cplusplus

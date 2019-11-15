@@ -42,7 +42,7 @@ rtime_t sswall (void);
 double kops (rtime_t delta, unsigned n);
 
 unsigned rrand (unsigned n);
-unsigned xrand (unsigned n);
+unsigned x_rand (unsigned n);
 void ** varnd (unsigned argc, void * argv []);
 
 

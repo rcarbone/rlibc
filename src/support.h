@@ -30,11 +30,11 @@
 
 
 /* Useful macros */
-#if !defined(RMAX)
-#define RMAX(a, b) (((a) > (b)) ? (a) : (b))
-#endif
 #if !defined(RMIN)
 #define RMIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+#if !defined(RMAX)
+#define RMAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 

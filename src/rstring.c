@@ -24,7 +24,7 @@
 #include <ctype.h>
 
 
-/* Public header */
+/* Project header */
 #include "rstring.h"
 
 
@@ -137,4 +137,13 @@ void rlower (char * s)
 	* s = tolower (* s);
 	s ++;
       }
+}
+
+
+/* Remove any trailing [cr] and [nl] and backslash [\\] */
+void nocrlf (char * line)
+{
+  if (line && * line)
+    while (line [strlen (line) - 1] == '\n' || line [strlen (line) - 1] == '\r' || line [strlen (line) - 1] == '\\')
+      line [strlen (line) - 1] = 0x00;
 }

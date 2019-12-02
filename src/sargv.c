@@ -81,7 +81,7 @@ unsigned argslen (char * argv [])
 /* Add an element to an array */
 char ** argsmore (char * argv [], char * s)
 {
-  return (char **) vamore ((void **) argv, strdup (s));
+  return s ? (char **) vamore ((void **) argv, strdup (s)) : argv;
 }
 
 

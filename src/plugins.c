@@ -159,7 +159,7 @@ rplugin_t * rplugin_mk (char * path, int * code, char ** error)
   p -> funs     = NULL;
   p -> state    = RPLUGIN_LOADED;
 
-  p -> id [strlen (p -> id) - RPLUGIN_SO_SUFFIX_LEN] = 0x0;
+  p -> id [strlen (p -> id) - RPLUGIN_SO_SUFFIX_LEN] = 0x00;
 
   /* Load plugin declarations. Stop if not all mandatory plugin declarations have been found */
   names = mandatory;

@@ -6,6 +6,7 @@
 /* System headers */
 #include <errno.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <stdarg.h>
 #include <string.h>
 #include <time.h>
@@ -20,12 +21,12 @@ char * tvtouptime (struct timeval * tv);
 
 
 /* Local variables */
-static char * logname  = NULL;
-static char * lognode  = NULL;            /* Name of the system where the logging is performed */
-static char * logfile  = NULL;            /* Logging filename                                  */
-static FILE * logfd    = NULL;            /* Logging file descriptor                           */
-static int logformat   = 1;               /* Boolean to set timestamp format to date/time      */
-static pid_t pid       = -1;              /* Process pid                                       */
+static char * logname = NULL;
+static char * lognode = NULL;             /* Name of the system where the logging is performed */
+static char * logfile = NULL;             /* Logging filename                                  */
+static FILE * logfd   = NULL;             /* Logging file descriptor                           */
+static bool logfmt    = true;             /* Boolean to set timestamp format to date/time      */
+static pid_t pid      = -1;               /* Process pid                                       */
 static struct timeval uptime = { 0, 0 };  /* Time the application has started                  */
 
 
@@ -37,17 +38,17 @@ static char * months [12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "
 /* Build a syslog-like timestamp string
  * in the format => www mmm dd hh:mm:ss yyyy
  */
-static char * timestamp ()
+static char * timestamp (void)
 {
   static char buf [128];
 
-  struct timeval now;
-  time_t t = time (0);
+  time_t t       = time (NULL);
   struct tm * tm = localtime (& t);
+  struct timeval now;
 
   gettimeofday (& now, NULL);
 
-  if (logformat)
+  if (logfmt)
     sprintf (buf, "%s %s %02d %02d:%02d:%02d %04d | ",
 	     wdays [tm ->  tm_wday],
 	     months [tm -> tm_mon],
@@ -64,7 +65,7 @@ static char * timestamp ()
 
 
 /* Initialize the logging system */
-void xloginit (char * name, char * node, char * log, struct timeval * started, int logfmt, int flush)
+void xloginit (char * name, char * node, char * log, struct timeval * started, bool fmt, bool flush)
 {
   /* Open log file */
   safeclose (logfd);
@@ -82,9 +83,8 @@ void xloginit (char * name, char * node, char * log, struct timeval * started, i
   lognode = strdup (node ? node : "");
   logfile = strdup (log ? log : "");
   pid     = getpid ();
-  logformat = logfmt ? 1 : 0;
+  logfmt  = fmt ? 1 : 0;
 
-  /* FIX name, node */
   if (! started)
     gettimeofday (& uptime, NULL);
   else
@@ -96,12 +96,12 @@ void xloginit (char * name, char * node, char * log, struct timeval * started, i
 void xlogterm (void)
 {
   /* Reset global variables */
-  logname   = safefree (logname);
-  lognode   = safefree (lognode);
-  logfile   = safefree (logfile);
-  logfd     = safeclose (logfd);
-  logformat = 1;
-  pid       = -1;
+  logname = safefree (logname);
+  lognode = safefree (lognode);
+  logfile = safefree (logfile);
+  logfd   = safeclose (logfd);
+  logfmt  = 1;
+  pid     = -1;
   uptime . tv_sec = uptime . tv_usec = 0;
 }
 
@@ -125,3 +125,41 @@ int xlog (const char * fmt, ...)
 
   return 0;
 }
+
+
+/* Set the format of logging lines to:
+ *   Tue Sep 23 08:32:38.640056 2019 <host> <progname>
+ */
+void datelogformat (void)
+{
+  logfmt = true;
+}
+
+
+/* Set the format of logging lines to:
+ *   1222103922  0:00:03.183222 <host> <progname>
+ */
+void timelogformat (void)
+{
+  logfmt = false;
+}
+
+
+/* Return the current value for the log format boolean */
+bool getlogformat (void)
+{
+  return logfmt;
+}
+
+
+/* Toggle the format of logging lines from:
+ *         Tue Sep 23 08:32:38.640056 2019 <host> <progname>
+ * to
+ *         1222103922  0:00:03.183222 <host> <progname>
+ */
+void togglelogformat (void)
+{
+  logfmt = ! logfmt;
+}
+
+

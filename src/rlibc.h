@@ -57,7 +57,7 @@ int get_cols (void);
 int get_rows (void);
 
 /* Public functions in file xlog.c */
-FILE * xloginit (char * progname, char * node, char * logname, struct timeval * started, unsigned fmt, bool flush);
+FILE * xloginit (char * progname, char * node, char * logname, struct timeval * started, bool fmt, bool flush);
 void xlogterm (void);
 int xlog (const char * fmt, ...);
 bool getlogformat (void);

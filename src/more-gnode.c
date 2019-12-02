@@ -28,7 +28,6 @@
 
 #define GMAX(a,b) ((a) > (b) ? (a) : (b))
 
-
 /* UTF-8 defines by Johan Myreen, updated by Ben Winslow */
 #define UTF_V        "\342\224\202"        /* U+2502, Vertical line drawing char */
 #define UTF_H        "\342\224\200"        /* U+2500, Horizontal                 */
@@ -216,8 +215,8 @@ static void connector (unsigned x, char * center, char * first, char * last, cha
   switch (x)
     {
     case 0: break;
-    case 1: printf ("%s", center); break;
-    case 2: printf ("%s%s", center, last); break;
+    case 1: printf ("%s", center);                  break;
+    case 2: printf ("%s%s", center, last);          break;
     case 3: printf ("%s%s%s", first, center, last); break;
 
     default:
@@ -481,9 +480,7 @@ static void print_randy (GNode * root, randy_t * randy)
 
 
 /*
- * -=-=-=-=-=-=-
- *      API
- * -=-=-=-=-=-=-
+ * API
  */
 
 /* Memory cleanup */

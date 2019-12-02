@@ -90,7 +90,7 @@ unsigned rrand (unsigned n)
 
 
 /* Generate pseudo-random numbers in the range [0 n-1] */
-unsigned x_rand (unsigned n)
+unsigned xrand (unsigned n)
 {
   struct timeval tv;
 

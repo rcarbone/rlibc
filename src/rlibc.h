@@ -27,18 +27,18 @@
 #include "replace.h"
 #include "rstring.h"
 #include "support.h"
-#include "gnode.h"
 #include "rctype.h"
 #include "rwall.h"
 #include "interval.h"
 #include "elapsed.h"
-#include "xrand.h"
 #include "roptions.h"
+#include "gnode.h"
+#include "rmatrix.h"
+#include "xrand.h"
 #include "parsecfg.h"
 #include "fmemdmp.h"
 #include "other.h"
 #include "rsi.h"
-#include "rmatrix.h"
 
 
 /* Public functions in file gnu-argv.c */
@@ -55,3 +55,15 @@ void initialize_curses (void);
 void terminate_curses (void);
 int get_cols (void);
 int get_rows (void);
+
+/* Public functions in file xlog.c */
+FILE * xloginit (char * progname, char * node, char * logname, struct timeval * started, unsigned fmt, bool flush);
+void xlogterm (void);
+int xlog (const char * fmt, ...);
+bool getlogformat (void);
+void datelogformat (void);
+void timelogformat (void);
+void togglelogformat (void);
+
+
+char * tvtouptime (struct timeval * tv);

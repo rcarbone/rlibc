@@ -33,26 +33,38 @@
 #include "support.h"
 
 
+/* Return the hostname */
+char * rnodename (void)
+{
+  static struct utsname machine;
+
+  uname (& machine);
+
+  return machine . nodename;
+}
+
+
 /* Return the full qualified hostname */
 char * rfqname (void)
 {
   struct utsname machine;
+  struct hostent * he;
   struct sockaddr_in in;
 
   uname (& machine);
 
   /* Attempt to resolv hostname to get the internet address */
-  struct hostent * h = gethostbyname (machine . nodename);
+  he = gethostbyname (machine . nodename);
 
-  if (h)
-    memcpy (& in . sin_addr, h -> h_addr_list [0], h -> h_length);
+  if (he)
+    memcpy (& in . sin_addr, he -> h_addr_list [0], he -> h_length);
   else
     in . sin_addr . s_addr = inet_addr (machine . nodename);
 
   /* Back to the full qualified domain address */
-  h = gethostbyaddr ((char *) & in . sin_addr, sizeof (struct in_addr), AF_INET);
+  he = gethostbyaddr ((char *) & in . sin_addr, sizeof (struct in_addr), AF_INET);
 
-  return ! h || ! h -> h_name ? inet_ntoa (in . sin_addr) : h -> h_name;
+  return ! he || ! he -> h_name ? inet_ntoa (in . sin_addr) : he -> h_name;
 }
 
 

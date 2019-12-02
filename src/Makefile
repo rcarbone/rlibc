@@ -49,6 +49,7 @@ LIBSRCS  += other.c
 LIBSRCS  += rsi.c
 LIBSRCS  += rmatrix.c
 LIBSRCS  += curses.c
+LIBSRCS  += rock.c
 
 # The name of the games
 LIBNAME   = rlibc

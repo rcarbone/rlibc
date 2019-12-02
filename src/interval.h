@@ -31,8 +31,9 @@ int _hours_ (time_t t2, time_t t1);
 int _mins_ (time_t t2, time_t t1);
 
 struct timeval * tvnow (void);
-time_t timenow (void);
 bool samet (struct timeval * t2, struct timeval * t1);
+
+time_t timenow (void);
 time_t seconds (struct timeval * t);
 time_t milliseconds (struct timeval * t);
 time_t microseconds (struct timeval * t);

@@ -60,6 +60,7 @@ unsigned digits (unsigned n);
 /* Well formatted percentage */
 char * xpercentage (unsigned long partial, unsigned long total);
 
+char * rnodename (void);
 char * rfqname (void);
 void rhelloworld (char * progname, char * version, char * date, char * time, char * nodename, char * author);
 void rversion (char * progname, char * version, char * date, char * time);

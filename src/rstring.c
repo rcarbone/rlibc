@@ -147,3 +147,4 @@ void nocrlf (char * line)
     while (line [strlen (line) - 1] == '\n' || line [strlen (line) - 1] == '\r' || line [strlen (line) - 1] == '\\')
       line [strlen (line) - 1] = 0x00;
 }
+

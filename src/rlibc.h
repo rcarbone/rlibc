@@ -39,6 +39,7 @@
 #include "fmemdmp.h"
 #include "other.h"
 #include "rsi.h"
+#include "plugins.h"
 
 
 /* Public functions in file gnu-argv.c */
@@ -57,7 +58,7 @@ int get_cols (void);
 int get_rows (void);
 
 /* Public functions in file xlog.c */
-void xloginit (char * progname, char * node, char * logname, struct timeval * started, bool fmt, bool flush);
+void xloginit (char * progname, char * node, char * logfile, struct timeval * started, bool fmt, bool flush);
 void xlogterm (void);
 int xlog (const char * fmt, ...);
 bool getlogformat (void);

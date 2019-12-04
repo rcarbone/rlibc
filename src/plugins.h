@@ -2,7 +2,18 @@
  * The definitions to load/unload/query/call plugins.
  *
  * What is a plugin for the goal of the project?
- *  A plugin is simply a shared object with basic restrictions to distinguish it from other common Unix shated object files.
+ *  A plugin is simply a shared object with some restrictions
+ *  to distinguish it from other common Unix shater object files.
+ *
+ * To be a [plugin] a shared object *must* define the 2 strings
+ *  [variables]
+ *  [functions]
+ * as a blanks separated list of respectively variables and functions defined in the [plugin].
+ *
+ * Among others, the 2 funtions [boot] and [halt] must be defined in order
+ * to inialize/terminate the [plugin].
+ *
+ * Each function defined should return one of the 2 costants
  */
 
 #pragma once
@@ -22,7 +33,6 @@
 #define RPLUGIN_VARS    "variables"
 #define RPLUGIN_FUNCS   "functions"
 
-
 /* Reserved keywords to initialize and terminate the plugin */
 #define RPLUGIN_START   "boot"
 #define RPLUGIN_STOP    "halt"
@@ -41,11 +51,6 @@
 /* Plugin files candidates to be loaded must have the following suffix */
 #define RPLUGIN_SO_SUFFIX      ".so"
 #define RPLUGIN_SO_SUFFIX_LEN  3
-
-
-/* Add/Clear plugin items to a table */
-#define rplugin_more(argv, item) (rplugin_t **) vamore ((void **) argv, (void *) item)
-#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rmplugin)
 
 
 /* The prototype for the a generic function that could be implemented in the plugin */
@@ -84,6 +89,10 @@ typedef struct
 
 /* -=-=-=-=-=-=-= API -=-=-=-=-=-=-= */
 
+#define	PLG_FAILURE	1	/* Failing exit status    */
+#define	PLG_SUCCESS	0	/* Successful exit status */
+
+
 /* Allocate and free dynamic memory to hold a plugin */
 rplugin_t  * rplugin_mk (char * path, int * code, char ** error);
 rplugin_t  * rplugin_rm (rplugin_t * plugin);
@@ -97,6 +106,10 @@ void         rplugin_unload (rplugin_t * argv []);
 
 /* List/Load plugins in a given directory */
 char      ** rplugin_ls (char * dir);
+
+/* Helpers to Add/Clear plugin items to/from a table */
+#define rplugin_more(argv, item) (rplugin_t **) vamore ((void **) argv, (void *) item)
+#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rmplugin)
 
 /* Check is a name has been defined in the table of symbols */
 char       * rplugin_variable (char * name, rplugin_symbol_t * argv []);

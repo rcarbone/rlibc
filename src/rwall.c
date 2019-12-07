@@ -87,15 +87,3 @@ unsigned rrand (unsigned n)
   srand (nswall ());
   return rand () % n;
 }
-
-
-/* Generate pseudo-random numbers in the range [0 n-1] */
-unsigned xrand (unsigned n)
-{
-  struct timeval tv;
-
-  gettimeofday (& tv, NULL);
-  srand (tv . tv_sec ^ tv . tv_usec);
-
-  return ! n ? 0 : rand () % n;
-}

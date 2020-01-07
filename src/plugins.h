@@ -109,7 +109,7 @@ char      ** rplugin_ls (char * dir);
 
 /* Helpers to Add/Clear plugin items to/from a table */
 #define rplugin_more(argv, item) (rplugin_t **) vamore ((void **) argv, (void *) item)
-#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rmplugin)
+#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rplugin_close)
 
 /* Check is a name has been defined in the table of symbols */
 char       * rplugin_variable (char * name, rplugin_symbol_t * argv []);

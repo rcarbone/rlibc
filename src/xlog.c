@@ -25,8 +25,8 @@ static char * logname = NULL;
 static char * lognode = NULL;             /* Name of the system where the logging is performed */
 static char * logfile = NULL;             /* Logging filename                                  */
 static FILE * logfd   = NULL;             /* Logging file descriptor                           */
-static bool logfmt    = true;             /* Boolean to set timestamp format to date/time      */
-static pid_t pid      = -1;               /* Process pid                                       */
+static bool   logfmt  = true;             /* Boolean to set timestamp format to date/time      */
+static pid_t  pid     = -1;               /* Process pid                                       */
 static struct timeval uptime = { 0, 0 };  /* Time the application has started                  */
 
 
@@ -35,10 +35,8 @@ static char * wdays [7]   = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 static char * months [12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 
-/* Build a syslog-like timestamp string
- * in the format => www mmm dd hh:mm:ss yyyy
- */
-static char * timestamp (void)
+/* Build a syslog-like timestamp string in the format => www mmm dd hh:mm:ss yyyy */
+static char * timestamp (char * progname, char * nodename, const char * plugname)
 {
   static char buf [128];
 
@@ -49,16 +47,18 @@ static char * timestamp (void)
   gettimeofday (& now, NULL);
 
   if (logfmt)
-    sprintf (buf, "%s %s %02d %02d:%02d:%02d %04d | ",
+    snprintf (buf, sizeof (buf), "%s %s %02d %02d:%02d:%02d.%06d %04d %s %s%s%s%s | ",
 	     wdays [tm ->  tm_wday],
 	     months [tm -> tm_mon],
 	     tm -> tm_mday,
 	     tm -> tm_hour,
 	     tm -> tm_min,
 	     tm -> tm_sec,
-	     tm -> tm_year + 1900);
+	     (unsigned) now . tv_usec,
+	     tm -> tm_year + 1900,
+	     nodename, progname, plugname ? " [" : "", plugname ? plugname : "", plugname ? "]" : "");
   else
-    sprintf (buf, "%ld %s | ", (long) now . tv_sec, tvtouptime (& uptime));
+    snprintf (buf, sizeof (buf), "%ld %s %s %s | ", (long) now . tv_sec, tvtouptime (& uptime), nodename, progname);
 
   return buf;
 }
@@ -118,7 +118,7 @@ int xlog (const char * fmt, ...)
 
   va_start (va_ap, fmt);
 
-  fprintf (logfd, "%s", timestamp ());
+  fprintf (logfd, "%s", timestamp (logname, lognode, NULL));
   vfprintf (logfd, fmt, va_ap);
 
   va_end (va_ap);
@@ -161,5 +161,3 @@ void togglelogformat (void)
 {
   logfmt = ! logfmt;
 }
-
-

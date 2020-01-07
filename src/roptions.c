@@ -107,20 +107,20 @@ void usage_item (struct option * options, unsigned n, unsigned val, char * descr
 
 
 /* Display version information */
-void _version_ (char * progname, char * version)
+void _version_ (char * progname, const char * version, char * date, char * time)
 {
-  printf ("%s, ver. %s built on %s %s\n", progname, version, __DATE__, __TIME__);
+  printf ("%s, ver. %s built on %s %s\n", progname, version, date, time);
   fflush (stdout);
 }
 
 
 /* Welcome on board! */
-void _welcome_ (char * progname, char * version)
+void _welcome_ (char * progname, const char * version, char * date, char * _time_)
 {
   time_t now = time (0);
   struct utsname u;
   uname (& u);
-  _version_ (progname, version);
+  _version_ (progname, version, date, _time_);
   printf ("\n");
   printf ("Running on : %s %s %s %s %s\n", u . sysname, u . nodename, u . release, u . version, u . machine);
   printf ("Local time : %s", ctime (& now));

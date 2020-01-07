@@ -117,7 +117,7 @@ void _version_ (char * progname, const char * version, char * date, char * time)
 /* Welcome on board! */
 void _welcome_ (char * progname, const char * version, char * date, char * _time_)
 {
-  time_t now = time (0);
+  time_t now = time (NULL);
   struct utsname u;
   uname (& u);
   _version_ (progname, version, date, _time_);
@@ -126,4 +126,24 @@ void _welcome_ (char * progname, const char * version, char * date, char * _time
   printf ("Local time : %s", ctime (& now));
   printf ("\n");
   fflush (stdout);
+}
+
+
+char * _built_ (char * progname, const char * version, char * date, char * time)
+{
+  static char buf [1024];
+
+  sprintf (buf, "%s, ver. %s built on %s %s", progname, version, date, time);
+  return buf;
+}
+
+
+char * _running_ (void)
+{
+  static char buf [1024];
+
+  struct utsname u;
+  uname (& u);
+  sprintf (buf, "%s %s %s %s %s", u . sysname, u . nodename, u . release, u . version, u . machine);
+  return buf;
 }

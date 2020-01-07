@@ -71,7 +71,7 @@ char * rfqname (void)
 /* Announce to the world! */
 void rhello (char * progname, char * version, char * date, char * _time, char * nodename, char * author)
 {
-  time_t now = time (0);
+  time_t now = time (NULL);
   char * nowstring = ctime (& now);
 
   printf ("This is %s %s (%s %s)\n", progname, version, date, _time);

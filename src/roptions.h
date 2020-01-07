@@ -43,8 +43,12 @@ unsigned optmax (struct option * options);
 char * optlegitimate (struct option * options);
 char * optname (struct option * options, unsigned n, unsigned val);
 void usage_item (struct option * options, unsigned n, unsigned val, char * description);
+
+/* Helpers */
 void _version_ (char * progname, const char * version, char * date, char * time);
 void _welcome_ (char * progname, const char * version, char * date, char * time);
+char * _built_ (char * progname, const char * version, char * date, char * time);
+char * _running_ (void);
 
 
 #ifdef __cplusplus

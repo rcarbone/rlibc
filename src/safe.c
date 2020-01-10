@@ -44,7 +44,7 @@ void * safereplace (void * a, void * b)
 
 FILE * safeopen (char * f)
 {
-  return ! strcmp (f, "*") ? NULL : ! strcmp (f, "-") ? stdout : fopen (f, "a+");
+  return ! f ? NULL : ! strcmp (f, "*") ? NULL : ! strcmp (f, "-") ? stdout : fopen (f, "a+");
 }
 
 

@@ -96,6 +96,7 @@ typedef struct
 /* Allocate and free dynamic memory to hold a plugin */
 rplugin_t  * rplugin_mk (char * path, int * code, char ** error);
 rplugin_t  * rplugin_rm (rplugin_t * plugin);
+void         rplugin_bye (void * plg);
 
 /* Load/unload in memory plugin(s) passed by filename(s) */
 rplugin_t  * rplugin_open (char * file);
@@ -109,7 +110,7 @@ char      ** rplugin_ls (char * dir);
 
 /* Helpers to Add/Clear plugin items to/from a table */
 #define rplugin_more(argv, item) (rplugin_t **) vamore ((void **) argv, (void *) item)
-#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rplugin_close)
+#define rplugin_clear(argv)      (rplugin_t **) vaclear ((void **) argv, rplugin_bye)
 
 /* Check is a name has been defined in the table of symbols */
 char       * rplugin_variable (char * name, rplugin_symbol_t * argv []);

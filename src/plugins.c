@@ -247,6 +247,13 @@ rplugin_t * rplugin_rm (rplugin_t * p)
 }
 
 
+/* Wrapper to make arrclear() happy */
+void rplugin_bye (void * plg)
+{
+  rplugin_rm (plg);
+}
+
+
 /* Load the plugin passed by filename */
 rplugin_t * rplugin_open (char * file)
 {

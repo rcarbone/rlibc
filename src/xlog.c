@@ -46,7 +46,7 @@ static char * timestamp (char * progname, char * nodename, const char * plugname
 
   gettimeofday (& now, NULL);
 
-  if (logfmt)
+  if (logfmt)      /* date format */
     snprintf (buf, sizeof (buf), "%s %s %02d %04d %02d:%02d:%02d.%06d %s %s%s%s%s | ",
 	     wdays [tm ->  tm_wday],
 	     months [tm -> tm_mon],
@@ -57,7 +57,7 @@ static char * timestamp (char * progname, char * nodename, const char * plugname
 	     tm -> tm_sec,
 	     (unsigned) now . tv_usec,
 	     nodename, progname, plugname ? " [" : "", plugname ? plugname : "", plugname ? "]" : "");
-  else
+  else             /* time format */
     snprintf (buf, sizeof (buf), "%ld %s %s %s | ", (long) now . tv_sec, tvtouptime (& uptime), nodename, progname);
 
   return buf;

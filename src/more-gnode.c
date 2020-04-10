@@ -38,7 +38,7 @@
 #define SPACE " "
 #define HBAR  "-"
 #define VBAR  "|"
-#if defined(ROCCO)
+#if !defined(ROCCO)
 #define PLUS  "+"
 #else
 #define PLUS  UTF_HD
@@ -388,7 +388,7 @@ static gboolean x_foreach (GNode * node, gpointer _info)
 /* Implementation from Rosetta Code http://rosettacode.org/wiki/Visualize_a_tree#C adapted to use glib-gnode */
 static void print_rosetta (GNode * root, GNode * stems)
 {
-#if defined(ROCCO)
+#if !defined(ROCCO)
   static char * more = "--";
   static char * down = "  |";
   static char * last = "  `";
@@ -704,6 +704,7 @@ static void g_node_rocco (GNode * root, GNode * stems)
 
   stem -> next = NULL;
 }
+
 
 void g_node_hprint_tree_bug (GNode * root)
 {

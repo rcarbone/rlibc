@@ -69,26 +69,26 @@ static time_t usecs (time_t t)
 
 
 /* Convert a timeval to microseconds */
-double tvtof (const struct timeval * tv)
+time_t tvtof (const struct timeval * tv)
 {
-  return (double) tv -> tv_sec * 1000000 + tv -> tv_usec;
+  return (time_t) tv -> tv_sec * 1000000 + tv -> tv_usec;
 }
 
 
-/* Convert back a double to timeval (seconds and microseconds) */
-struct timeval * ftotv (double usecs)
+/* Convert back a time_t to timeval (seconds and microseconds) */
+struct timeval * ftotv (time_t usecs)
 {
   static struct timeval tv;
 
   tv . tv_sec  = usecs / 1000000;
-  tv . tv_usec = usecs - (double) tv . tv_sec * 1000000;
+  tv . tv_usec = usecs - (time_t) tv . tv_sec * 1000000;
 
   return & tv;
 }
 
 
 /* Convert a time in microseconds to a string */
-char * ftoa (double t)
+char * ftoa (time_t t)
 {
   static char text [20];
 
@@ -101,9 +101,9 @@ char * ftoa (double t)
 
 
 /* The time since 'tv' in milliseconds */
-double tvtomsecs (struct timeval * tv)
+time_t tvtomsecs (struct timeval * tv)
 {
-  return (double) tv -> tv_sec * 1000.0 + tv -> tv_usec / 1000.0;
+  return tv -> tv_sec * 1000.0 + tv -> tv_usec / 1000.0;
 }
 
 
@@ -381,9 +381,9 @@ void msecstotv (time_t msecs, struct timeval * tv)
 }
 
 
-/* Convert a double representing a time in microseconds to back into seconds and microseconds */
-void usecstotv (double usecs, struct timeval * tv)
+/* Convert a time_t representing a time in microseconds to back into seconds and microseconds */
+void usecstotv (time_t usecs, struct timeval * tv)
 {
   tv -> tv_sec  = usecs / 1000000;
-  tv -> tv_usec = (double) (usecs / 1000000) * 1000000;
+  tv -> tv_usec = (time_t) (usecs / 1000000) * 1000000;
 }

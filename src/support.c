@@ -26,6 +26,17 @@
 #include "rwall.h"
 
 
+static bool is_number (char d)
+{
+  switch (d)
+    {
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9': return true;
+    default: return false;
+    }
+}
+
+
 /*
  * http://stackoverflow.com/questions/6127503/shuffle-array-in-c
  *
@@ -91,6 +102,20 @@ void itoa (int c, char * ret)
 
       ret [y] = '\0';
     }
+}
+
+
+/* checks for an alphanumeric string */
+bool is_numeric (char * s)
+{
+  if (! s || ! * s)
+    return false;
+
+  while (* s)
+    if (! is_number (* s ++))
+      return false;
+
+  return true;
 }
 
 

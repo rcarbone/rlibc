@@ -43,28 +43,30 @@
 
 
 /* Public functions in file gnu-argv.c */
-char ** dupargv (char * const *argv);
-void freeargv (char **vector);
-char **buildargv (const char *input);
-int writeargv (char * const *argv, FILE *f);
-void expandargv (int *argcp, char ***argvp);
-int countargv (char * const *argv);
+char ** dupargv (char * const * argv);
+void    freeargv (char ** vector);
+char ** buildargv (const char * input);
+int     writeargv (char * const * argv, FILE * f);
+void    expandargv (int * argcp, char *** argvp);
+int     countargv (char * const * argv);
 
 
 /* Public functions in file curses.c */
-void initialize_curses (void);
-void terminate_curses (void);
-int get_cols (void);
-int get_rows (void);
+void    initialize_curses (void);
+void    terminate_curses (void);
+int     get_cols (void);
+int     get_rows (void);
 
 /* Public functions in file xlog.c */
-void xloginit (char * progname, char * node, char * logfile, struct timeval * started, bool fmt, bool flush);
-void xlogterm (void);
-int xlog (const char * fmt, ...);
-bool getlogformat (void);
-void datelogformat (void);
-void timelogformat (void);
-void togglelogformat (void);
+void    xloginit (char * progname, char * node, char * logfile, struct timeval * started, bool fmt, bool flush);
+void    xlogterm (void);
+int     xlog (const char * fmt, ...);
+bool    getlogformat (void);
+void    datelogformat (void);
+void    timelogformat (void);
+void    togglelogformat (void);
 
 
-char * tvtouptime (struct timeval * tv);
+char  * tvtouptime (struct timeval * tv);
+struct timeval * tvelapsed (struct timeval * tv2, struct timeval * tv1);
+char  * tvtoa (struct timeval * tv);

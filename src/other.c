@@ -36,11 +36,16 @@
 /* Return the hostname */
 char * rnodename (void)
 {
-  static struct utsname machine;
+  static struct utsname node;
 
-  uname (& machine);
+  char * dot;
+  uname (& node);
 
-  return machine . nodename;
+  dot = strchr (node . nodename, '.');
+  if (dot)
+    * dot = '\0';
+
+  return node . nodename;
 }
 
 
@@ -69,13 +74,13 @@ char * rfqname (void)
 
 
 /* Announce to the world! */
-void rhello (char * progname, char * version, char * date, char * _time, char * nodename, char * author)
+void rhello (char * progname, char * version, char * date, char * targ, char * nodename, char * author)
 {
-  time_t now = time (NULL);
-  char * nowstring = ctime (& now);
+  time_t now    = time (NULL);
+  char * strnow = ctime (& now);
 
-  printf ("This is %s %s (%s %s)\n", progname, version, date, _time);
-  printf ("Started %24.24s on %s\n", nowstring, nodename);
+  printf ("This is %s %s (%s %s)\n", progname, version, date, targ);
+  printf ("Started %24.24s on %s\n", strnow, nodename);
   printf ("By %s\n", author);
   printf ("\n");
   fflush (stdout);

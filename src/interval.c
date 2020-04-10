@@ -101,7 +101,7 @@ int _mins_ (time_t t2, time_t t1)
 }
 
 
-/* Return 1 is t1 == t2 at second resolution */
+/* Return true is t1 == t2 at second resolution */
 bool samet (struct timeval * t2, struct timeval * t1)
 {
   return t2 -> tv_sec == t1 -> tv_sec;
@@ -196,6 +196,12 @@ void print_time_in_secs (struct timeval * t, char * label)
 
 
 /* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+void tvzero (struct timeval * tv)
+{
+  tv -> tv_sec = tv -> tv_usec = 0;
+}
+
 
 struct timeval * tvnow (void)
 {

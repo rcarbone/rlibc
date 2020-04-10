@@ -30,6 +30,7 @@ int _days_ (time_t t2, time_t t1);
 int _hours_ (time_t t2, time_t t1);
 int _mins_ (time_t t2, time_t t1);
 
+void tvzero (struct timeval * tv);
 struct timeval * tvnow (void);
 bool samet (struct timeval * t2, struct timeval * t1);
 

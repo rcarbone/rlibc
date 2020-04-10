@@ -22,6 +22,7 @@
 
 /* System headers */
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <time.h>
 
@@ -46,6 +47,8 @@ extern "C" {
 /* Evaluate n integers in random order */
 unsigned * rndorder (unsigned n);
 
+bool is_numeric (char * s);
+
 /* sprintf() replacement */
 void itoa (int c, char * ret);
 char * utoa (unsigned n);
@@ -62,7 +65,7 @@ char * xpercentage (unsigned long partial, unsigned long total);
 
 char * rnodename (void);
 char * rfqname (void);
-void rhelloworld (char * progname, char * version, char * date, char * time, char * nodename, char * author);
+void rhello (char * progname, char * version, char * date, char * time, char * nodename, char * author);
 void rversion (char * progname, char * version, char * date, char * time);
 
 

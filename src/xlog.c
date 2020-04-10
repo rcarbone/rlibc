@@ -30,12 +30,12 @@ static pid_t  pid     = -1;               /* Process pid                        
 static struct timeval uptime = { 0, 0 };  /* Time the application has started                  */
 
 
-/* Week day and month names */
+/* Week days and month names */
 static char * wdays [7]   = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 static char * months [12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 
-/* Build a syslog-like timestamp string in the format => www mmm dd yyyy hh:mm:ss */
+/* Build a syslog-like timestamp string in the format => www mmm dd yyyy hh:mm:ss.uuuuuu */
 static char * timestamp (char * progname, char * nodename, const char * plugname)
 {
   static char buf [128];
@@ -48,15 +48,15 @@ static char * timestamp (char * progname, char * nodename, const char * plugname
 
   if (logfmt)      /* date format */
     snprintf (buf, sizeof (buf), "%s %s %02d %04d %02d:%02d:%02d.%06d %s %s%s%s%s | ",
-	     wdays [tm ->  tm_wday],
-	     months [tm -> tm_mon],
-	     tm -> tm_mday,
+	      wdays [tm ->  tm_wday],
+	      months [tm -> tm_mon],
+	      tm -> tm_mday,
 	      tm -> tm_year + 1900,
-	     tm -> tm_hour,
-	     tm -> tm_min,
-	     tm -> tm_sec,
-	     (unsigned) now . tv_usec,
-	     nodename, progname, plugname ? " [" : "", plugname ? plugname : "", plugname ? "]" : "");
+	      tm -> tm_hour,
+	      tm -> tm_min,
+	      tm -> tm_sec,
+	      (unsigned) now . tv_usec,
+	      nodename, progname, plugname ? " [" : "", plugname ? plugname : "", plugname ? "]" : "");
   else             /* time format */
     snprintf (buf, sizeof (buf), "%ld %s %s %s | ", (long) now . tv_sec, tvtouptime (& uptime), nodename, progname);
 

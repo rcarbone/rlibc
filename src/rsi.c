@@ -450,3 +450,18 @@ unsigned rsi_bytes (unsigned fd)
 
   return bytes;
 }
+
+
+/* Role to string */
+char * rsi_rtoa (rsi_role_e role)
+{
+  switch (role)
+    {
+    case RSI_DAEMON:  return "Daemon";
+    case RSI_CLIENT:  return "Client";
+    case RSI_SERVER:  return "Server";
+    }
+  return "No role";
+}
+
+

@@ -19,13 +19,15 @@
 
 #pragma once
 
+#include "rtypes.h"
 #include "safe.h"
+#include "rstring.h"
+#include "rtrim.h"
+
 #include "vargv.h"
 #include "sargv.h"
 
-#include "rtypes.h"
 #include "replace.h"
-#include "rstring.h"
 #include "support.h"
 #include "rctype.h"
 #include "rwall.h"
@@ -42,6 +44,10 @@
 #include "plugins.h"
 
 
+/* Public functions in file buffers.c */
+char  * rfmt (char * fmt, ...);
+
+
 /* Public functions in file gnu-argv.c */
 char ** dupargv (char * const * argv);
 void    freeargv (char ** vector);
@@ -56,6 +62,7 @@ void    initialize_curses (void);
 void    terminate_curses (void);
 int     get_cols (void);
 int     get_rows (void);
+
 
 /* Public functions in file xlog.c */
 void    xloginit (char * progname, char * node, char * logfile, struct timeval * started, bool fmt, bool flush);

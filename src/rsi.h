@@ -39,10 +39,6 @@
 #include <arpa/inet.h>
 
 
-/* Project headers */
-#include "rsi.h"
-
-
 /* Constants */
 #define RSI_ZERO            (0x00)
 #define RSI_PORT            (1381)
@@ -64,6 +60,22 @@
 #define RSI_ACCEPT_ERROR    (-5)
 #define RSI_LAST            RSI_ACCEPT_ERROR
 
+/* Constants used only as logging labels */
+#define RSI_APPL_DAEMON     "Daemon"
+#define RSI_APPL_CLIENT     "Client"
+#define RSI_APPL_SERVER     "Server"
+
+
+/* Application roles in the comunications as established during TCP/IPv4 connection phase */
+typedef enum
+{
+  RSI_DAEMON = (1),
+  RSI_CLIENT,
+  RSI_SERVER
+
+} rsi_role_e;
+
+
 /* Helpers */
 typedef struct sockaddr    sa_t;
 typedef struct sockaddr_in sin_t;
@@ -72,14 +84,15 @@ typedef struct timeval     tv_t;
 
 
 /* Function prototypes */
-char * rsi_error (int n);
-bool rsi_isany (char * str);
-char * rsi_dotname (char * who);
-struct sockaddr_in * rsi_addrtosin (char * addr);
-int rsi_connect (char * remote, unsigned port);
-int rsi_aconnect (char * remote, unsigned rport, char * local, unsigned lport);
-void rsi_disconnect (unsigned fd);
-int rsi_welcome (unsigned lfd, char ** remote, unsigned * rport);
-int rsi_incoming (char * address, unsigned port, unsigned backlog);
-int rsi_send (unsigned fd, char * frame, unsigned len);
+char   * rsi_error (int n);
+bool     rsi_isany (char * str);
+char   * rsi_dotname (char * who);
+sin_t  * rsi_addrtosin (char * addr);
+int      rsi_connect (char * remote, unsigned port);
+int      rsi_aconnect (char * remote, unsigned rport, char * local, unsigned lport);
+void     rsi_disconnect (unsigned fd);
+int      rsi_welcome (unsigned lfd, char ** remote, unsigned * rport);
+int      rsi_incoming (char * address, unsigned port, unsigned backlog);
+int      rsi_send (unsigned fd, char * frame, unsigned len);
 unsigned rsi_bytes (unsigned fd);
+char   * rsi_rtoa (rsi_role_e role);

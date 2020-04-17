@@ -62,6 +62,7 @@ unsigned digits (unsigned n);
 
 /* Well formatted percentage */
 char * xpercentage (unsigned long partial, unsigned long total);
+unsigned rcols (void);
 
 char * rnodename (void);
 char * rfqname (void);

@@ -19,7 +19,9 @@
 
 /* System headers */
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <sys/ioctl.h>
 
 /* Project headers */
 #include "support.h"
@@ -202,4 +204,11 @@ char * xpercentage (unsigned long partial, unsigned long total)
     strcpy (buffer [k], "");    /* just the empty string */
 
   return buffer [k];
+}
+
+
+unsigned rcols (void)
+{
+  struct winsize ws;
+  return ioctl (STDOUT_FILENO, TIOCGWINSZ, & ws) != -1 && ws . ws_col > 0 ? ws . ws_col : 80;
 }

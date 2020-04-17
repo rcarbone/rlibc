@@ -212,8 +212,9 @@ char ** argspieces (char * list, char * sep)
   char * param;
   char * names = list ? strdup (list) : NULL;
 
-  while (names && (param = strtok (! argv ? names : NULL, sep)))
-    argv = argsmore (argv, param);
+  if (names)
+    while ((param = strtok (! argv ? names : NULL, sep)))
+      argv = argsmore (argv, param);
 
   if (names)
     free (names);
@@ -260,32 +261,6 @@ unsigned argswidest (char * argv [])
 }
 
 
-/* how many columns? */
-static unsigned eval_cols (char * argv [], unsigned width)
-{
-  unsigned max = argswidest (argv);
-  unsigned cols = width / ((max + 8) &~ 7);
-  if (cols == 0)
-    cols = 1;
-  return cols;
-}
-
-
-/* how many rows? */
-static unsigned eval_rows (char * argv [], unsigned width)
-{
-  unsigned cols = eval_cols (argv, width);
-  return (arrlen (argv) + cols - 1) / cols;
-}
-
-
-/*  how many items in the last row? */
-static unsigned eval_last (char * argv [], unsigned width)
-{
-  return arrlen (argv) - eval_cols (argv, width) * (eval_rows (argv, width) - 1);
-}
-
-
 int args_iter (unsigned rows, unsigned cols, unsigned r, unsigned c)
 {
   return r < rows - 1 && c < cols - 1 ? r * cols + c : -1;
@@ -309,7 +284,7 @@ void args_print_rows (char * argv [], unsigned width)
   unsigned c;
 
   /* how many columns? */
-  cols = width / ((max + 8) &~ 7);
+  cols = width / max;
   if (cols == 0)
     cols = 1;
 
@@ -337,59 +312,24 @@ void args_print_cols (char * argv [], unsigned width)
   unsigned cols;
   unsigned r;
   unsigned c;
-  unsigned last;
 
   /* how many columns? */
-  cols = width / ((max + 8) &~ 7);
+  cols = width / max;
   if (cols == 0)
     cols = 1;
 
   /* how many rows? */
   rows = (argc + cols - 1) / cols;
 
-  /* how many items in the last row? */
-  last = eval_last (argv, width);
-
-  for (r = 0; r < rows - 1; r ++)
+  for (r = 0; r < rows; r ++)
     {
       for (c = 0; c < cols; c ++)
-	{
-	  if (c <= last)
-	    {
-	      if (c * rows + r < argc)
-		{
-		  if (c < cols - 1)
-		    printf ("%-*.*s", max, max, argv [c * rows + r]);
-		  else
-		    printf ("%s", argv [c * rows + r]);
-		}
-	      else
-		break;
-	    }
-	  else
-	    {
-	      unsigned less = c - last;
-	      if (c * rows + r - less < argc)
-		{
-		  if (c < cols - 1)
-		    printf ("%-*.*s", max, max, argv [c * rows + r - less]);
-		  else
-		    printf ("%s", argv [c * rows + r - less]);
-		}
-	      else
-		break;
-	    }
-	}
+	if (c * rows + r < argc)
+	  printf ("%-*.*s", max, max, argv [c * rows + r]);
+	else
+	  break;
       printf ("\n");
     }
-
-  /* Last row */
-  for (c = 0; c < last; c ++)
-    if (c < last - 1)
-      printf ("%-*.*s", max, max, argv [c * rows + rows - 1]);
-    else
-      printf ("%s", argv [c * rows + rows - 1]);
-  printf ("\n");
 }
 
 

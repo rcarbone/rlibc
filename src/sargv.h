@@ -64,6 +64,8 @@ void args_print_cols (char * argv [], unsigned width);
 char ** print_lines (char * argv []);
 void argsrows (char * argv []);
 
+void argsreplace (char * argv [], char * s, char * d);
+
 #ifdef __cplusplus
 }
 #endif

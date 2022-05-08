@@ -352,3 +352,16 @@ void argsrows (char * argv [])
     while (* argv)
       printf ("%3d. \"%s\"\n", ++ argc, * argv ++);
 }
+
+
+/* Replace the element 's' in the array of arguments with 'd' */
+void argsreplace (char * argv [], char * s, char * d)
+{
+  int i;
+
+  if ((i = argsmember (argv, s)) != -1)
+    {
+      safefree (argv [i]);                   /* free the argument */
+      argv [i] = strdup (d);
+    }
+}
